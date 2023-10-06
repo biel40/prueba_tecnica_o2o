@@ -4,14 +4,31 @@ import { Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class BeerService {
-  private apiUrl = 'https://api.example.com/beers';
 
-  constructor(private http: HttpClient) { }
+    private apiUrl = 'https://api.punkapi.com/v2/beers';
 
-  searchBeers(query: string): Observable<any> {
-    return this.http.get(`${this.apiUrl}?q=${query}`);
-  }
+    constructor(private http: HttpClient) { 
+
+    }
+
+    searchBeersByName(query: string): Observable<any> {
+        return this.http.get(`${this.apiUrl}?beer_name=${query}`);
+    }
+
+    searchBeersByHops(query: string): Observable<any> {
+        return this.http.get(`${this.apiUrl}?hops=${query}`);
+    }
+
+    searchBeersByMalt(query: string): Observable<any> {
+        return this.http.get(`${this.apiUrl}?brewed_before=${query}`);
+    }
+
+    searchBeersByFood(query: string): Observable<any> {
+        return this.http.get(`${this.apiUrl}?food=${query}`);
+    }
+
+   
 }

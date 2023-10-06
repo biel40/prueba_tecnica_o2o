@@ -4,18 +4,19 @@
     <form [formGroup]="form">
         <mat-form-field class="">
             <mat-label>Cerveza</mat-label>
-            <input matInput formControlName="beer" placeholder="Negra" value="rubia">
+            <input (input)="search($event)" matInput formControlName="beer" placeholder="Negra" value="rubia">
         </mat-form-field>
     </form>
 
-    <div>
+    <!-- <div>
         <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" (click)="searchBeer()">
             Buscar cerveza
         </button>
-    </div>
+    </div> -->
 
-    <input (input)="search($event)" placeholder="Buscar cerveza">
-    <ul>
-        <li *ngFor="let beer of beers$ | async"> {{ beer.name }} </li>
-    </ul>
+    <div>
+        <ul>
+            <li *ngFor="let beer of beerList"> {{ beer.name }} </li>
+        </ul>
+    </div>
 </div>

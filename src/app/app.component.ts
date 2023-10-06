@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Observable, Subject, debounceTime, distinctUntilChanged, switchMap } from 'rxjs';
+import { Observable, Subject, combineLatest, debounceTime, distinctUntilChanged, switchMap } from 'rxjs';
 import { BeerService } from './services/beer.service';
 
 @Component({
@@ -15,31 +15,85 @@ export class AppComponent {
   private searchTerms = new Subject<string>();
 
   beers$: Observable<any[]> = new Observable<any[]>();
+  beerList: any[] = [];
 
-  constructor(private formBuilder: FormBuilder, private beerService: BeerService) {
+  constructor(
+    private formBuilder: FormBuilder, 
+    private beerService: BeerService
+  ) {
     this.form = this.formBuilder.group({
       beer: ['']
     });
   }
 
   ngOnInit(): void {
-    
-    this.beers$ = this.searchTerms.pipe(
-      debounceTime(300), // Espera 300ms de inactividad de escritura
-      distinctUntilChanged(), // Ignora si el nuevo término de búsqueda es igual al anterior
-      switchMap((term: string) => this.beerService.searchBeers(term))
+    // Crear Observables separados para cada tipo de búsqueda
+    const searchByName$ = this.searchTerms.pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      switchMap((term: string) => this.beerService.searchBeersByName(term))
     );
+
+    const searchByHops$ = this.searchTerms.pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      switchMap((term: string) => this.beerService.searchBeersByHops(term))
+    );
+
+    const searchByMalt$ = this.searchTerms.pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      switchMap((term: string) => this.beerService.searchBeersByMalt(term))
+    );
+
+    const searchByFood$ = this.searchTerms.pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      switchMap((term: string) => this.beerService.searchBeersByFood(term))
+    );
+
+    // Combinar todos los observables en uno solo
+    this.beers$ = combineLatest([
+      searchByName$,
+      searchByHops$,
+      searchByMalt$,
+      searchByFood$
+    ]).pipe(
+      // Mapear los resultados de cada observable en un solo array
+      switchMap(([searchByName, searchByHops, searchByMalt, searchByFood]) => {
+        return [...searchByName, ...searchByHops, ...searchByMalt, ...searchByFood];
+      })
+    );
+
+    this.beers$.subscribe((data) => 
+      this.saveBeer(data)
+    );
+
+    // Si hay duplicados en la lista, eliminarlos
+    this.beerList = this.beerList.filter((item, index) => {
+      return this.beerList.indexOf(item) === index;
+    });
+  }
+
+  public saveBeer(data: any): void {
+    this.beerList.push(data);
+    console.log('Data: ', data); 
   }
 
   public searchBeer(): void {
     console.log('Beer: ', this.form.get('beer')?.value);
   }
 
-  // Función para enviar el término de búsqueda al Subject
   search(event: Event): void {
 
+    // Cada vez que buscamos, reseteamos la lista de cervezas
+    this.beerList = [];
+    
     const term = (event.target as HTMLInputElement).value;
+    console.log('Term: ', term);
 
-    this.searchTerms.next(term);
+    if (term != '') {
+      this.searchTerms.next(term);
+    }
   }
 }
