@@ -8,6 +8,13 @@
         </mat-form-field>
     </form>
 
-    <app-beer-list [beerList]="beerList"></app-beer-list>
-    
+    <div *ngIf="loading">
+        <p> Cargando... </p>
+    </div>
+
+    <app-beer-list *ngIf="beerList.length > 0 else elseBlock;" [beerList]="beerList"></app-beer-list>
+
+    <ng-template #elseBlock>
+        <p> No se han encontrado resultados para la búsqueda. </p>
+    </ng-template>
 </div>

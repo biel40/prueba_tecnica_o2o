@@ -15,6 +15,7 @@ export class AppComponent {
   private searchTerms = new Subject<string>();
   beers$: Observable<Beer> = new Observable<Beer>();
   beerList: Beer[] = [];
+  loading: boolean = true;
 
   private debounceTime = 200;
 
@@ -73,7 +74,10 @@ export class AppComponent {
           t.name === beer.name
         ))
       );
+      this.loading = false;
     });
+
+    this.loading = false;
   }
 
   public saveBeer(data: any): void {
@@ -83,6 +87,7 @@ export class AppComponent {
 
   search(event: Event): void {
     this.beerList = [];
+    this.loading = true;
 
     const term = (event.target as HTMLInputElement).value;
 
