@@ -1,27 +1,23 @@
-# PruebaTecnicaO2o
+# PruebaTecnicaO2O - Gabriel Borràs
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.3.
+## Descripción
 
-## Development server
+Éste pequeño proyecto es una prueba técnica para la empresa O2O. Es un buscador de cervezas, utilizando una API como backend para los resultados. La URL de la API es la siguiente: https://api.punkapi.com/v2/beers;
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Se ha utilizado el Framework Angular, en su última versión, junto con Angular Material para el diseño de la página. 
 
-## Code scaffolding
+Además, se ha instalado TailwindCSS como procesador de CSS, para poder utilizar clases y estilos.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+La web tiene un diseño simple, pero pensado para ser responsive.
 
-## Build
+## Instalación
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Para instalar el proyecto, es necesario tener instalado NodeJS y Angular CLI. Una vez instalado, se debe ejecutar el comando `npm install` para instalar las dependencias del proyecto.
 
-## Running unit tests
+## Ejecución
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Para ejecutar el proyecto, se debe ejecutar el comando `ng serve` y acceder a la dirección `http://localhost:4200/`.
 
-## Running end-to-end tests
+## Uso
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+Para utilizar el proyecto, se debe escribir en el buscador el nombre de la cerveza que se desea buscar. Aparecerá una lista de los resultados de la búsqueda.
