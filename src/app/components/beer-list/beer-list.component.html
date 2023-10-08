@@ -1,0 +1,8 @@
+<div class="mt-4 w-full max-w-md">
+    <ul class="flex flex-col items-center justify-center space-y-2">
+        <li *ngFor="let beer of beerList"
+            class="bg-blue-200 p-3 rounded-lg hover:bg-blue-400 hover:text-white transition duration-300 cursor-pointer">
+            {{ beer.name }}
+        </li>
+    </ul>
+</div>

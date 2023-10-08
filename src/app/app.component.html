@@ -1,22 +1,13 @@
-<div class="mt-10 flex flex-col items-center justify-center">
-    <h1>Main Component</h1>
+<div class="mt-10 flex flex-col items-center justify-center space-y-4">
+    <h1 class="text-3xl font-semibold text-center text-indigo-600">Búsqueda de Cerveza</h1>
 
-    <form [formGroup]="form">
-        <mat-form-field class="">
+    <form [formGroup]="form" class="w-full max-w-md">
+        <mat-form-field class="w-full">
             <mat-label>Cerveza</mat-label>
-            <input (input)="search($event)" matInput formControlName="beer" placeholder="Negra" value="rubia">
+            <input (input)="search($event)" matInput formControlName="beer" placeholder="Buscar una cerveza" />
         </mat-form-field>
     </form>
 
-    <!-- <div>
-        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" (click)="searchBeer()">
-            Buscar cerveza
-        </button>
-    </div> -->
-
-    <div>
-        <ul>
-            <li *ngFor="let beer of beerList"> {{ beer.name }} </li>
-        </ul>
-    </div>
+    <app-beer-list [beerList]="beerList"></app-beer-list>
+    
 </div>
